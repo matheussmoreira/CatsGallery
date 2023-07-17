@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class ViewController: UIViewController {
     
@@ -16,6 +17,8 @@ class ViewController: UIViewController {
     // MARK: Instance properties
     
     private var collectionView: UICollectionView?
+    private var cancellables = Set<AnyCancellable>()
+    var viewModel = CatsGalleryViewModel()
     
     // MARK: View lifecycle
     
@@ -41,9 +44,26 @@ class ViewController: UIViewController {
     }
     
     @objc private func didTapRefreshButton() {
-        print("Refresh!")
+        viewModel.queryCats().sink { completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                switch error {
+                case .generic(error: let error):
+                    print("Generic error: \(error)")
+                case .invalidURL:
+                    print("Invalid URL")
+                case .noData:
+                    print("No data")
+                case .parsingError(error: let error):
+                    print("Parsing error: \(error)")
+                }
+            }
+        } receiveValue: { [weak self] catsData in
+            self?.collectionView?.reloadData()
+        }.store(in: &cancellables)
     }
-    
 }
 
 // MARK: - Setup CollectionView
@@ -88,7 +108,7 @@ extension ViewController {
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return viewModel.catsData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -96,6 +116,13 @@ extension ViewController: UICollectionViewDataSource {
             print("Could not instantiate ImageCell.")
             return UICollectionViewCell()
         }
+        
+        if let data = viewModel.catsData, let image = UIImage(data: data[indexPath.row]) {
+            cell.imageView.image = image
+        } else {
+            print("No image!")
+        }
+        
         return cell
     }
 }

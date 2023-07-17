@@ -8,15 +8,22 @@
 import UIKit
 
 class ImageCell: UICollectionViewCell {
+    
+    // MARK: Type properties
+    
     static let identifier = "ImageCell"
     
-    private let imageView: UIImageView = {
+    // MARK: Instance properties
+    
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "placeholder")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView
     }()
+    
+    // MARK: Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,6 +36,12 @@ class ImageCell: UICollectionViewCell {
         
         setupImage()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Private methods
     
     private func setupShadowEffect() {
         layer.shadowOpacity = 1.0
@@ -52,9 +65,4 @@ class ImageCell: UICollectionViewCell {
         imageView.layer.masksToBounds = true
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // layoutSubviews ???
 }
