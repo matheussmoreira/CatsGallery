@@ -15,6 +15,7 @@
 		2FD858BB2A65C71500CB3E62 /* CatsGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858BA2A65C71500CB3E62 /* CatsGalleryTests.swift */; };
 		2FD858C52A65C71500CB3E62 /* CatsGalleryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858C42A65C71500CB3E62 /* CatsGalleryUITests.swift */; };
 		2FD858C72A65C71500CB3E62 /* CatsGalleryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858C62A65C71500CB3E62 /* CatsGalleryUITestsLaunchTests.swift */; };
+		2FD858D52A65C8F300CB3E62 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D42A65C8F300CB3E62 /* ImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		2FD858C02A65C71500CB3E62 /* CatsGalleryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsGalleryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD858C42A65C71500CB3E62 /* CatsGalleryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsGalleryUITests.swift; sourceTree = "<group>"; };
 		2FD858C62A65C71500CB3E62 /* CatsGalleryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsGalleryUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2FD858D42A65C8F300CB3E62 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,9 +99,9 @@
 		2FD858A22A65C71200CB3E62 /* CatsGallery */ = {
 			isa = PBXGroup;
 			children = (
+				2FD858D32A65C8BF00CB3E62 /* View */,
 				2FD858A32A65C71200CB3E62 /* AppDelegate.swift */,
 				2FD858A52A65C71200CB3E62 /* SceneDelegate.swift */,
-				2FD858A72A65C71200CB3E62 /* ViewController.swift */,
 				2FD858AC2A65C71500CB3E62 /* Assets.xcassets */,
 				2FD858AE2A65C71500CB3E62 /* LaunchScreen.storyboard */,
 				2FD858B12A65C71500CB3E62 /* Info.plist */,
@@ -122,6 +124,15 @@
 				2FD858C62A65C71500CB3E62 /* CatsGalleryUITestsLaunchTests.swift */,
 			);
 			path = CatsGalleryUITests;
+			sourceTree = "<group>";
+		};
+		2FD858D32A65C8BF00CB3E62 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2FD858A72A65C71200CB3E62 /* ViewController.swift */,
+				2FD858D42A65C8F300CB3E62 /* ImageCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FD858A82A65C71200CB3E62 /* ViewController.swift in Sources */,
+				2FD858D52A65C8F300CB3E62 /* ImageCell.swift in Sources */,
 				2FD858A42A65C71200CB3E62 /* AppDelegate.swift in Sources */,
 				2FD858A62A65C71200CB3E62 /* SceneDelegate.swift in Sources */,
 			);
