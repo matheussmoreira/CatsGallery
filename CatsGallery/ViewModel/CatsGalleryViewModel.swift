@@ -9,21 +9,54 @@ import Foundation
 import Combine
 
 final class CatsGalleryViewModel {
-    let catsService: CatsGalleryServiceProtocol
-    var catsData: [PostData]?
+    let searchService: SearchServiceProtocol
+    let downloadService: DownloadServiceProtocol
+    var postsData = [PostData]()
+    var imagesData = [Data]()
     
-    init(catsService: CatsGalleryServiceProtocol = CatsGalleryService()) {
-        self.catsService = catsService
+    init(searchService: SearchServiceProtocol = SearchService(),
+         downloadService: DownloadServiceProtocol = DownloadService()) {
+        self.searchService = searchService
+        self.downloadService = downloadService
     }
     
-    func queryCats() -> Future<[PostData], NetworkError>  {
+    func queryPosts(execute handler: () -> Void) -> Future<[PostData], NetworkError> {
+        handler()
         return Future { promise in
-            self.catsService.getCats { result in
+            self.searchService.getPosts { result in
                 switch result {
                 case .success(let data):
-                    self.catsData = data
+                    self.postsData = data
+                    print("Got posts!")
                     promise(.success(data))
-                    
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func downloadImages() -> Future<Data, NetworkError> {
+        for data in postsData {
+            guard let images = data.images else { continue }
+            for image in images {
+                return downloadImage(link: image.link)
+            }
+        }
+        
+        return Future { promise in
+            promise(.failure(.noData))
+        }
+    }
+    
+    private func downloadImage(link: String?) -> Future<Data, NetworkError> {
+        return Future { promise in
+            self.downloadService.getImage(link: link) { result in
+                switch result {
+                case .success(let data):
+                    self.imagesData.append(data)
+                    print("New data!")
+                    promise(.success(data))
                 case .failure(let error):
                     promise(.failure(error))
                 }

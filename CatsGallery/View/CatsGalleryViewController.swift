@@ -19,6 +19,7 @@ class CatsGalleryViewController: UIViewController {
     private var collectionView: UICollectionView?
     private var cancellables = Set<AnyCancellable>()
     var viewModel = CatsGalleryViewModel()
+    var catsNumber = 32
     
     // MARK: View lifecycle
     
@@ -44,7 +45,12 @@ class CatsGalleryViewController: UIViewController {
     }
     
     @objc private func didTapRefreshButton() {
-        viewModel.queryCats().sink { completion in
+        let query = viewModel.queryPosts {
+            viewModel.postsData = []
+            self.collectionView?.reloadData()
+        }
+        
+        query.sink { completion in
             switch completion {
             case .finished:
                 break
@@ -60,8 +66,33 @@ class CatsGalleryViewController: UIViewController {
                     print("Parsing error: \(error)")
                 }
             }
-        } receiveValue: { [weak self] catsData in
-            self?.collectionView?.reloadData()
+        } receiveValue: { _ in
+            self.downloadImages()
+        }.store(in: &cancellables)
+    }
+    
+    private func downloadImages() {
+        let download = self.viewModel.downloadImages()
+        download.sink { completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                switch error {
+                case .generic(error: let error):
+                    print("Generic error: \(error)")
+                case .invalidURL:
+                    print("Invalid URL")
+                case .noData:
+                    print("No data")
+                case .parsingError(error: let error):
+                    print("Parsing error: \(error)")
+                }
+            }
+        } receiveValue: { _ in
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
         }.store(in: &cancellables)
     }
 }
@@ -108,22 +139,24 @@ extension CatsGalleryViewController {
 
 extension CatsGalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.catsData?.count ?? 0
+        return catsNumber
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier, for: indexPath) as? ImageCell else {
-            print("Could not instantiate ImageCell.")
-            return UICollectionViewCell()
-        }
-        
-//        if let data = viewModel.catsData, let image = UIImage(data: data[indexPath.row]) {
+        guard indexPath.row < viewModel.imagesData.count else { return UICollectionViewCell() }
+
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier, for: indexPath) as? ImageCell else {
+//            print("Could not instantiate ImageCell.")
+//            return UICollectionViewCell()
+//        }
+//
+//        let imageData = viewModel.imagesData[indexPath.row]
+//        if let image = UIImage(data: imageData) {
 //            cell.imageView.image = image
-//        } else {
-//            print("No image!")
 //        }
         
-        return cell
+//        return cell
+        return UICollectionViewCell()
     }
 }
 
@@ -131,5 +164,15 @@ extension CatsGalleryViewController: UICollectionViewDataSource {
 
 extension CatsGalleryViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let filtered = indexPaths.filter({ $0.row >= catsNumber - 1})
+        
+        if filtered.count > 0 { catsNumber += 1 }
+        
+        filtered.forEach({_ in
+            self.didTapRefreshButton()
+        })
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
     }
 }

@@ -8,9 +8,10 @@
 import Foundation
 
 typealias APICompletion<T: Codable> = (Result<T, NetworkError>) -> Void
+typealias DataCompletion = (Result<Data, NetworkError>) -> Void
 
 class GenericAPIService {
-    func requestDataTask<T: Codable>(from url: URL?, httpMethod: HTTPMethod, completion: @escaping APICompletion<T>) {
+    func requestDataTask<T: Codable>(for url: URL?, httpMethod: HTTPMethod, completion: @escaping APICompletion<T>) {
         guard let url = url else {
             completion(.failure(NetworkError.invalidURL))
             return
@@ -34,7 +35,6 @@ class GenericAPIService {
                 return
             }
             
-            #warning("Mover o parsing para outro lugar")
             do {
                 let parsedData = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(parsedData))
@@ -43,5 +43,25 @@ class GenericAPIService {
             }
         }
         task.resume()
+    }
+    
+    func requestDataTask(for url: URL, completion: @escaping DataCompletion) -> URLSessionDataTask {
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                completion(.failure(.generic(error: error)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            completion(.success(data))
+        }
+        
+        task.resume()
+        return task
     }
 }
