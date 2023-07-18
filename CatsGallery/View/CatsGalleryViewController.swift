@@ -117,11 +117,11 @@ extension CatsGalleryViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        if let data = viewModel.catsData, let image = UIImage(data: data[indexPath.row]) {
-            cell.imageView.image = image
-        } else {
-            print("No image!")
-        }
+//        if let data = viewModel.catsData, let image = UIImage(data: data[indexPath.row]) {
+//            cell.imageView.image = image
+//        } else {
+//            print("No image!")
+//        }
         
         return cell
     }

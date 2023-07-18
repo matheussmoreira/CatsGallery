@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CatsGalleryServiceProtocol {
-    func getCats(completion: @escaping (Result<[Data], NetworkError>) -> Void)
+    func getCats(completion: @escaping (Result<[CatsData], NetworkError>) -> Void)
 }
 
 class CatsGalleryService: CatsGalleryServiceProtocol {
@@ -21,7 +21,7 @@ class CatsGalleryService: CatsGalleryServiceProtocol {
         self.url = URL(string: endpoint)
     }
     
-    func getCats<T: Codable>(completion: @escaping APICompletion<T>) {
-        serviceLayer.requestDataTask(from: url, completion: completion)
+    func getCats(completion: @escaping (Result<[CatsData], NetworkError>) -> Void) {
+        serviceLayer.requestDataTask(from: url, httpMethod: .GET, completion: completion)
     }
 }
