@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2FD858A42A65C71200CB3E62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858A32A65C71200CB3E62 /* AppDelegate.swift */; };
 		2FD858A62A65C71200CB3E62 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858A52A65C71200CB3E62 /* SceneDelegate.swift */; };
-		2FD858A82A65C71200CB3E62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858A72A65C71200CB3E62 /* ViewController.swift */; };
+		2FD858A82A65C71200CB3E62 /* CatsGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858A72A65C71200CB3E62 /* CatsGalleryViewController.swift */; };
 		2FD858AD2A65C71500CB3E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FD858AC2A65C71500CB3E62 /* Assets.xcassets */; };
 		2FD858B02A65C71500CB3E62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FD858AE2A65C71500CB3E62 /* LaunchScreen.storyboard */; };
 		2FD858BB2A65C71500CB3E62 /* CatsGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858BA2A65C71500CB3E62 /* CatsGalleryTests.swift */; };
@@ -17,7 +17,8 @@
 		2FD858C72A65C71500CB3E62 /* CatsGalleryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858C62A65C71500CB3E62 /* CatsGalleryUITestsLaunchTests.swift */; };
 		2FD858D52A65C8F300CB3E62 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D42A65C8F300CB3E62 /* ImageCell.swift */; };
 		2FD858D72A65D81600CB3E62 /* CatsGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D62A65D81600CB3E62 /* CatsGalleryViewModel.swift */; };
-		2FD858D92A65D83A00CB3E62 /* CatsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D82A65D83A00CB3E62 /* CatsService.swift */; };
+		2FD858D92A65D83A00CB3E62 /* CatsGalleryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D82A65D83A00CB3E62 /* CatsGalleryService.swift */; };
+		2FD874262A662F7A0092306B /* GenericAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD874252A662F7A0092306B /* GenericAPIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,10 +42,10 @@
 		2FD858A02A65C71200CB3E62 /* CatsGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatsGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD858A32A65C71200CB3E62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2FD858A52A65C71200CB3E62 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2FD858A72A65C71200CB3E62 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2FD858A72A65C71200CB3E62 /* CatsGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsGalleryViewController.swift; sourceTree = "<group>"; };
 		2FD858AC2A65C71500CB3E62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FD858AF2A65C71500CB3E62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		2FD858B12A65C71500CB3E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2FD858B12A65C71500CB3E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = CatsGallery/App/Info.plist; sourceTree = SOURCE_ROOT; };
 		2FD858B62A65C71500CB3E62 /* CatsGalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsGalleryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD858BA2A65C71500CB3E62 /* CatsGalleryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsGalleryTests.swift; sourceTree = "<group>"; };
 		2FD858C02A65C71500CB3E62 /* CatsGalleryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsGalleryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +53,8 @@
 		2FD858C62A65C71500CB3E62 /* CatsGalleryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsGalleryUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2FD858D42A65C8F300CB3E62 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		2FD858D62A65D81600CB3E62 /* CatsGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsGalleryViewModel.swift; sourceTree = "<group>"; };
-		2FD858D82A65D83A00CB3E62 /* CatsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsService.swift; sourceTree = "<group>"; };
+		2FD858D82A65D83A00CB3E62 /* CatsGalleryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsGalleryService.swift; sourceTree = "<group>"; };
+		2FD874252A662F7A0092306B /* GenericAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAPIService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,14 +105,11 @@
 		2FD858A22A65C71200CB3E62 /* CatsGallery */ = {
 			isa = PBXGroup;
 			children = (
-				2FD858B12A65C71500CB3E62 /* Info.plist */,
-				2FD858D82A65D83A00CB3E62 /* CatsService.swift */,
-				2FD858A32A65C71200CB3E62 /* AppDelegate.swift */,
-				2FD858A52A65C71200CB3E62 /* SceneDelegate.swift */,
-				2FD858D62A65D81600CB3E62 /* CatsGalleryViewModel.swift */,
-				2FD858AC2A65C71500CB3E62 /* Assets.xcassets */,
-				2FD858AE2A65C71500CB3E62 /* LaunchScreen.storyboard */,
+				2FD9E5632A66345F00C14806 /* Resources */,
+				2FD874292A66324A0092306B /* App */,
+				2FD874282A6630C80092306B /* ServiceLayer */,
 				2FD858D32A65C8BF00CB3E62 /* View */,
+				2FD874272A6630B70092306B /* ViewModel */,
 			);
 			path = CatsGallery;
 			sourceTree = "<group>";
@@ -135,10 +134,46 @@
 		2FD858D32A65C8BF00CB3E62 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2FD858A72A65C71200CB3E62 /* ViewController.swift */,
+				2FD858A72A65C71200CB3E62 /* CatsGalleryViewController.swift */,
 				2FD858D42A65C8F300CB3E62 /* ImageCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2FD874272A6630B70092306B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2FD858D62A65D81600CB3E62 /* CatsGalleryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2FD874282A6630C80092306B /* ServiceLayer */ = {
+			isa = PBXGroup;
+			children = (
+				2FD858D82A65D83A00CB3E62 /* CatsGalleryService.swift */,
+				2FD874252A662F7A0092306B /* GenericAPIService.swift */,
+			);
+			path = ServiceLayer;
+			sourceTree = "<group>";
+		};
+		2FD874292A66324A0092306B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2FD858AE2A65C71500CB3E62 /* LaunchScreen.storyboard */,
+				2FD858B12A65C71500CB3E62 /* Info.plist */,
+				2FD858A32A65C71200CB3E62 /* AppDelegate.swift */,
+				2FD858A52A65C71200CB3E62 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2FD9E5632A66345F00C14806 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2FD858AC2A65C71500CB3E62 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,11 +306,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FD874262A662F7A0092306B /* GenericAPIService.swift in Sources */,
 				2FD858D72A65D81600CB3E62 /* CatsGalleryViewModel.swift in Sources */,
-				2FD858A82A65C71200CB3E62 /* ViewController.swift in Sources */,
+				2FD858A82A65C71200CB3E62 /* CatsGalleryViewController.swift in Sources */,
 				2FD858D52A65C8F300CB3E62 /* ImageCell.swift in Sources */,
 				2FD858A42A65C71200CB3E62 /* AppDelegate.swift in Sources */,
-				2FD858D92A65D83A00CB3E62 /* CatsService.swift in Sources */,
+				2FD858D92A65D83A00CB3E62 /* CatsGalleryService.swift in Sources */,
 				2FD858A62A65C71200CB3E62 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,7 +483,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P27VQVDFNQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CatsGallery/Info.plist;
+				INFOPLIST_FILE = CatsGallery/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -474,7 +510,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P27VQVDFNQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CatsGallery/Info.plist;
+				INFOPLIST_FILE = CatsGallery/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

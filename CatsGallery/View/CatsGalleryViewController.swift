@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CatsGalleryViewController.swift
 //  CatsGallery
 //
 //  Created by Matheus Moreira on 17/07/23.
@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class ViewController: UIViewController {
+class CatsGalleryViewController: UIViewController {
     
     // MARK: Type properties
     
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
 
 // MARK: - Setup CollectionView
 
-extension ViewController {
+extension CatsGalleryViewController {
     private func setupCollectionView() {
         let layout = setupCollectionViewFlowLayout()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -106,7 +106,7 @@ extension ViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension ViewController: UICollectionViewDataSource {
+extension CatsGalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.catsData?.count ?? 0
     }
@@ -129,7 +129,7 @@ extension ViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDataSourcePrefetching
 
-extension ViewController: UICollectionViewDataSourcePrefetching {
+extension CatsGalleryViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
     }
 }

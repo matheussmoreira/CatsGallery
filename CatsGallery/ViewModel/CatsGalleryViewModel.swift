@@ -9,10 +9,10 @@ import Foundation
 import Combine
 
 final class CatsGalleryViewModel {
-    let catsService: CatsServiceProtocol
+    let catsService: CatsGalleryServiceProtocol
     var catsData: [Data]?
     
-    init(catsService: CatsServiceProtocol = CatsService()) {
+    init(catsService: CatsGalleryServiceProtocol = CatsGalleryService()) {
         self.catsService = catsService
     }
     
