@@ -34,6 +34,7 @@ class GenericAPIService {
                 return
             }
             
+            #warning("Mover o parsing para outro lugar")
             do {
                 let parsedData = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(parsedData))

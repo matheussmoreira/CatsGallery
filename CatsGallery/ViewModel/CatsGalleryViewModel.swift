@@ -7,16 +7,16 @@
 
 import Foundation
 import Combine
-// <V: Codable, A: Codable, IV: Codable, IT: Codable> 
+
 final class CatsGalleryViewModel {
     let catsService: CatsGalleryServiceProtocol
-    var catsData: [CatsData]?
+    var catsData: [PostData]?
     
     init(catsService: CatsGalleryServiceProtocol = CatsGalleryService()) {
         self.catsService = catsService
     }
     
-    func queryCats() -> Future<[CatsData], NetworkError>  {
+    func queryCats() -> Future<[PostData], NetworkError>  {
         return Future { promise in
             self.catsService.getCats { result in
                 switch result {
