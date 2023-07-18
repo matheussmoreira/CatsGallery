@@ -17,7 +17,7 @@ class ImageCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "placeholder")
+//        imageView.image = UIImage(named: "placeholder")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchServiceProtocol {
-    func getPosts(completion: @escaping (Result<[PostData], NetworkError>) -> Void)
+    func getPosts(completion: @escaping (Result<APIResponse, NetworkError>) -> Void)
 }
 
 class SearchService: SearchServiceProtocol {
@@ -19,7 +19,7 @@ class SearchService: SearchServiceProtocol {
         self.url = URL(string: endpoint)
     }
     
-    func getPosts(completion: @escaping (Result<[PostData], NetworkError>) -> Void) {
+    func getPosts(completion: @escaping (Result<APIResponse, NetworkError>) -> Void) {
         serviceLayer.requestDataTask(for: url, httpMethod: .GET, completion: completion)
     }
 }

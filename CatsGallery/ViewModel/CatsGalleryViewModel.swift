@@ -25,10 +25,12 @@ final class CatsGalleryViewModel {
         return Future { promise in
             self.searchService.getPosts { result in
                 switch result {
-                case .success(let data):
-                    self.postsData = data
-                    print("Got posts!")
-                    promise(.success(data))
+                case .success(let response):
+                    if let data = response.data {
+                        self.postsData = data
+                        promise(.success(data))
+                    }
+                    
                 case .failure(let error):
                     promise(.failure(error))
                 }
@@ -55,7 +57,6 @@ final class CatsGalleryViewModel {
                 switch result {
                 case .success(let data):
                     self.imagesData.append(data)
-                    print("New data!")
                     promise(.success(data))
                 case .failure(let error):
                     promise(.failure(error))

@@ -43,7 +43,9 @@ struct PostData: Codable {
     var in_most_viral: Bool?
     var include_album_ads: Bool?
     var images: [ImageData]?
-    var ad_config: AdConfig
+    var ad_config: AdConfig?
+    
+    init(){}
     
     /*  Custom decoder usado para lidar com os AnyCodables.
         Como não é possivel decodificar apenas eles de modo customizado,

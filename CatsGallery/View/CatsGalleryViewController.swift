@@ -19,7 +19,7 @@ class CatsGalleryViewController: UIViewController {
     private var collectionView: UICollectionView?
     private var cancellables = Set<AnyCancellable>()
     var viewModel = CatsGalleryViewModel()
-    var catsNumber = 32
+//    var catsNumber = 32
     
     // MARK: View lifecycle
     
@@ -108,7 +108,7 @@ extension CatsGalleryViewController {
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identifier)
         collectionView.dataSource = self
 //        collectionView.delegate = self
-        collectionView.prefetchDataSource = self
+//        collectionView.prefetchDataSource = self
         
         view.addSubview(collectionView)
         setupCollectionViewConstraints(collectionView)
@@ -139,40 +139,41 @@ extension CatsGalleryViewController {
 
 extension CatsGalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return catsNumber
+//        return catsNumber
+        return viewModel.imagesData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard indexPath.row < viewModel.imagesData.count else { return UICollectionViewCell() }
-
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier, for: indexPath) as? ImageCell else {
-//            print("Could not instantiate ImageCell.")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier, for: indexPath) as? ImageCell else {
+            print("Could not instantiate ImageCell.")
+            return UICollectionViewCell()
+        }
+//        guard indexPath.row < viewModel.imagesData.count else {
 //            return UICollectionViewCell()
 //        }
-//
-//        let imageData = viewModel.imagesData[indexPath.row]
-//        if let image = UIImage(data: imageData) {
-//            cell.imageView.image = image
-//        }
-        
-//        return cell
-        return UICollectionViewCell()
+
+        let imageData = viewModel.imagesData[indexPath.row]
+        if let image = UIImage(data: imageData) {
+            cell.imageView.image = image
+        }
+
+        return cell
     }
 }
 
 // MARK: - UICollectionViewDataSourcePrefetching
 
-extension CatsGalleryViewController: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let filtered = indexPaths.filter({ $0.row >= catsNumber - 1})
-        
-        if filtered.count > 0 { catsNumber += 1 }
-        
-        filtered.forEach({_ in
-            self.didTapRefreshButton()
-        })
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-    }
-}
+//extension CatsGalleryViewController: UICollectionViewDataSourcePrefetching {
+//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+//        let filtered = indexPaths.filter({ $0.row >= catsNumber - 1})
+//
+//        if filtered.count > 0 { catsNumber += 1 }
+//
+//        filtered.forEach({_ in
+//            self.didTapRefreshButton()
+//        })
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+//    }
+//}
