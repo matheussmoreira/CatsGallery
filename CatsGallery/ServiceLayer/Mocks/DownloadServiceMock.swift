@@ -8,7 +8,6 @@
 import Foundation
 
 class DownloadServiceMock: DownloadServiceProtocol {
-    var link: String?
     var getImageCompletion: ((Result<Data, NetworkError>) -> Void)?
     
     func getImage(link: String?, completion: @escaping (Result<Data, NetworkError>) -> Void) {
