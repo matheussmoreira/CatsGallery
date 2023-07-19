@@ -15,7 +15,6 @@ protocol DownloadServiceProtocol {
 class DownloadService: DownloadServiceProtocol {
     private let serviceLayer = GenericAPIService()
     private var cancellables = Set<AnyCancellable>()
-//    private var tasks: [URLSessionDataTask] = []
     
     func getImage(link: String?, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         guard let link = link, let url = URL(string: link) else {

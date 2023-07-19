@@ -19,7 +19,6 @@ class CatsGalleryViewController: UIViewController {
     private var collectionView: UICollectionView?
     private var cancellables = Set<AnyCancellable>()
     var viewModel = CatsGalleryViewModel()
-//    var catsNumber = 32
     
     private var label: UILabel = {
         let label = UILabel()
@@ -41,7 +40,7 @@ class CatsGalleryViewController: UIViewController {
         setupLabel()
     }
     
-    // MARK: Methods
+    // MARK: UI methods
     
     private func setupLabel() {
         view.addSubview(label)
@@ -90,14 +89,16 @@ class CatsGalleryViewController: UIViewController {
                     print("Search - Parsing error: \(error)")
                 }
             }
-        } receiveValue: { _ in
+        } receiveValue: { [unowned self] _ in
             print("Search was successful!")
-            self.downloadImages()
+            if self.viewModel.hasLinks {
+                self.downloadImages(onRange: self.viewModel.initialRange)
+            }
         }.store(in: &cancellables)
     }
     
-    private func downloadImages() {
-        let downloads = self.viewModel.downloadCatsImages()
+    private func downloadImages(onRange range: ClosedRange<Int>) {
+        let downloads = self.viewModel.downloadCatsImages(onRange: range)
         
         downloads.forEach {
             $0.sink { completion in
@@ -136,8 +137,7 @@ extension CatsGalleryViewController {
         
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identifier)
         collectionView.dataSource = self
-//        collectionView.delegate = self
-//        collectionView.prefetchDataSource = self
+        collectionView.prefetchDataSource = self
         
         view.addSubview(collectionView)
         setupCollectionViewConstraints(collectionView)
@@ -168,8 +168,7 @@ extension CatsGalleryViewController {
 
 extension CatsGalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return catsNumber
-        return viewModel.imagesData.count
+        return min(viewModel.totalDisplay, viewModel.imagesData.count)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -177,32 +176,52 @@ extension CatsGalleryViewController: UICollectionViewDataSource {
             print("Could not instantiate ImageCell.")
             return UICollectionViewCell()
         }
-//        guard indexPath.row < viewModel.imagesData.count else {
-//            return UICollectionViewCell()
-//        }
 
         let imageData = viewModel.imagesData[indexPath.row]
-        if let image = UIImage(data: imageData) {
-            cell.imageView.image = image
-        }
-
+        let catImage = UIImage(data: imageData)
+        let placeholder = UIImage(named: "placeholder")
+        
+        cell.imageView.image = catImage ?? placeholder
         return cell
     }
 }
 
 // MARK: - UICollectionViewDataSourcePrefetching
 
-//extension CatsGalleryViewController: UICollectionViewDataSourcePrefetching {
-//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        let filtered = indexPaths.filter({ $0.row >= catsNumber - 1})
-//
-//        if filtered.count > 0 { catsNumber += 1 }
-//
-//        filtered.forEach({_ in
-//            self.didTapRefreshButton()
-//        })
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-//    }
-//}
+extension CatsGalleryViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print("Prefetching!")
+//        let filtered = indexPaths.filter({ $0.row >= viewModel.totalDisplay - 4})
+        
+        let paths = indexPaths.sorted(by: { $0.row < $1.row } )
+
+        if !paths.isEmpty {
+            viewModel.totalDisplay += 16
+            DispatchQueue.main.async {
+                collectionView.reloadData()
+            }
+        } else {
+            return
+        }
+
+        let firstIndex = paths.first!.row
+        let lastIndex = paths.last!.row
+        downloadImages(onRange: firstIndex...lastIndex)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        /*
+         indexPaths.forEach({
+             guard let url = URL(string: "http://numbersapi.com/\($0)?json") else { return
+             }
+             guard let taskIndex = tasks.firstIndex(where: { $0.originalRequest?.url == url }) else {
+                 return
+             }
+             totalNumbers -= 1
+             self.tasks[taskIndex].cancel()
+             self.tasks.remove(at: taskIndex)
+         })
+     }
+         */
+    }
+}

@@ -27,11 +27,6 @@ struct ImageData: Codable {
     let link: String?
     let commentCount, favoriteCount, ups, downs: AnyCodable?
     let points, score: AnyCodable?
-//    let mp4Size: Int?
-//    let mp4: String?
-//    let gifv: String?
-//    let hls: String?
-//    let processing: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, datetime, type, animated, width, height, size, views, bandwidth, vote, favorite, nsfw, section
@@ -49,7 +44,5 @@ struct ImageData: Codable {
         case commentCount = "comment_count"
         case favoriteCount = "favorite_count"
         case ups, downs, points, score
-//        case mp4Size = "mp4_size"
-//        case mp4, gifv, hls, processing
     }
 }
