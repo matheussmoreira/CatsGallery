@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 typealias APICompletion<T: Codable> = (Result<T, NetworkError>) -> Void
 typealias DataCompletion = (Result<Data, NetworkError>) -> Void
@@ -19,7 +20,6 @@ class GenericAPIService {
         
         let clientId = "c92cb11f96fa019"
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
-        
         request.addValue("Client-ID \(clientId)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = httpMethod.rawValue
@@ -46,22 +46,25 @@ class GenericAPIService {
     }
     
     func requestDataTask(for url: URL, completion: @escaping DataCompletion) -> URLSessionDataTask {
-        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(.generic(error: error)))
                 return
             }
-            
             guard let data = data else {
                 completion(.failure(.noData))
                 return
             }
-            
             completion(.success(data))
         }
-        
         task.resume()
         return task
+    }
+    
+    func requestDataTaskPublisher(for url: URL) -> AnyPublisher<Data, URLError> {
+        print("Downloading image...")
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map { return $0.data }
+            .eraseToAnyPublisher()
     }
 }

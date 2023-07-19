@@ -44,56 +44,63 @@ class CatsGalleryViewController: UIViewController {
         navigationItem.rightBarButtonItem = buttonItem
     }
     
+    private func erase() {
+        viewModel.erase()
+        self.collectionView?.reloadData()
+    }
+    
     @objc private func didTapRefreshButton() {
-        let query = viewModel.queryPosts {
-            viewModel.postsData = []
-            self.collectionView?.reloadData()
-        }
+        let searchResult = viewModel.searchCatsPosts(execute: { erase() })
         
-        query.sink { completion in
+        searchResult.sink { completion in
             switch completion {
             case .finished:
                 break
             case .failure(let error):
                 switch error {
                 case .generic(error: let error):
-                    print("Generic error: \(error)")
+                    print("Search - Generic error: \(error)")
                 case .invalidURL:
-                    print("Invalid URL")
+                    print("Search - Invalid URL")
                 case .noData:
-                    print("No data")
+                    print("Search - No data")
                 case .parsingError(error: let error):
-                    print("Parsing error: \(error)")
+                    print("Search - Parsing error: \(error)")
                 }
             }
         } receiveValue: { _ in
-//            self.downloadImages()
+            print("Search was successful!")
+            self.downloadImages()
         }.store(in: &cancellables)
     }
     
     private func downloadImages() {
-        let download = self.viewModel.downloadImages()
-        download.sink { completion in
-            switch completion {
-            case .finished:
-                break
-            case .failure(let error):
-                switch error {
-                case .generic(error: let error):
-                    print("Generic error: \(error)")
-                case .invalidURL:
-                    print("Invalid URL")
-                case .noData:
-                    print("No data")
-                case .parsingError(error: let error):
-                    print("Parsing error: \(error)")
+        let downloads = self.viewModel.downloadCatsImages()
+        
+        downloads.forEach {
+            $0.sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    switch error {
+                    case .generic(error: let error):
+                        print("Download - Generic error: \(error)")
+                    case .invalidURL:
+                        print("Download - Invalid URL")
+                    case .noData:
+                        print("Download - No data")
+                    case .parsingError(error: let error):
+                        print("Download - Parsing error: \(error)")
+                    }
                 }
-            }
-        } receiveValue: { _ in
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
-            }
-        }.store(in: &cancellables)
+            } receiveValue: { _ in
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+            }.store(in: &cancellables)
+        } // forEach
+        
     }
 }
 
