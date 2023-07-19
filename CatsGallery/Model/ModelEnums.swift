@@ -25,7 +25,8 @@ enum AnyCodable: Codable {
             self = .string(stringValue)
         } else if let boolValue = try? decoder.singleValueContainer().decode(Bool.self) {
             self = .bool(boolValue)
+        } else {
+            throw TypeError.unknownValue
         }
-        throw TypeError.unknownValue
     }
 }

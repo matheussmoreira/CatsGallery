@@ -20,8 +20,8 @@ final class CatsGalleryViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         searchServiceMock = SearchServiceMock()
         downloadServiceMock = DownloadServiceMock()
-        sut = CatsGalleryViewModel(searchService: searchServiceMock,
-                                   downloadService: downloadServiceMock!)
+//        sut = CatsGalleryViewModel(searchService: searchServiceMock as! SearchServiceProtocol,
+//                                   downloadService: downloadServiceMock! as! DownloadServiceProtocol)
     }
 
     override func tearDownWithError() throws {

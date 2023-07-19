@@ -67,7 +67,7 @@ class CatsGalleryViewController: UIViewController {
                 }
             }
         } receiveValue: { _ in
-            self.downloadImages()
+//            self.downloadImages()
         }.store(in: &cancellables)
     }
     

@@ -10,15 +10,24 @@ import Foundation
 struct AdConfig: Codable {
     let safeFlags: [String]?
     let highRiskFlags: [String]?
-    let unsafeFlags: [String]?
-    let wallUnsafeFlags: [String]?
+    let unsafeFlags, wallUnsafeFlags: [String]?
     let showsAds: Bool?
     let showAdLevel: Int?
-    let safe_flags: [String]?
-    let high_risk_flags: [String]?
-    let unsafe_flags: [String]?
-    let wall_unsafe_flags: [String]?
-    let show_ads: Bool?
-    let show_ad_level: Int?
-    let nsfw_score: Int?
+    let adConfigSafeFlags: [String]?
+    let adConfigHighRiskFlags: [String]?
+    let adConfigUnsafeFlags, adConfigWallUnsafeFlags: [String]?
+    let showAds: Bool?
+    let adConfigShowAdLevel: Int?
+    let nsfwScore: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case safeFlags, highRiskFlags, unsafeFlags, wallUnsafeFlags, showsAds, showAdLevel
+        case adConfigSafeFlags = "safe_flags"
+        case adConfigHighRiskFlags = "high_risk_flags"
+        case adConfigUnsafeFlags = "unsafe_flags"
+        case adConfigWallUnsafeFlags = "wall_unsafe_flags"
+        case showAds = "show_ads"
+        case adConfigShowAdLevel = "show_ad_level"
+        case nsfwScore = "nsfw_score"
+    }
 }

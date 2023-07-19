@@ -17,10 +17,10 @@ class GenericAPIService {
             return
         }
         
-        let clientId = "1ceddedc03a5d71"
+        let clientId = "c92cb11f96fa019"
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
         
-        request.addValue("Client-ID {{\(clientId)}}", forHTTPHeaderField: "Authorization")
+        request.addValue("Client-ID \(clientId)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = httpMethod.rawValue
         
