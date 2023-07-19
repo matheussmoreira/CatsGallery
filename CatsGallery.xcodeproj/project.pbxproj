@@ -33,6 +33,7 @@
 		2FD858D72A65D81600CB3E62 /* CatsGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D62A65D81600CB3E62 /* CatsGalleryViewModel.swift */; };
 		2FD858D92A65D83A00CB3E62 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D82A65D83A00CB3E62 /* SearchService.swift */; };
 		2FD874262A662F7A0092306B /* GenericAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD874252A662F7A0092306B /* GenericAPIService.swift */; };
+		2FDE49F22A688D75000D53B2 /* CatsGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD858D62A65D81600CB3E62 /* CatsGalleryViewModel.swift */; };
 		2FF3D92D2A66DAAB0038CC12 /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3D92C2A66DAAB0038CC12 /* PostData.swift */; };
 		2FF3D92F2A66DACA0038CC12 /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3D92E2A66DACA0038CC12 /* TagData.swift */; };
 		2FF3D9312A66DADE0038CC12 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3D9302A66DADE0038CC12 /* ImageData.swift */; };
@@ -151,8 +152,6 @@
 			isa = PBXGroup;
 			children = (
 				2FD858BA2A65C71500CB3E62 /* CatsGalleryViewModelTests.swift */,
-				2F8A8CEB2A6731C20093EAC9 /* SearchServiceMock.swift */,
-				2F8A8CEE2A67343F0093EAC9 /* DownloadServiceMock.swift */,
 			);
 			path = CatsGalleryTests;
 			sourceTree = "<group>";
@@ -186,6 +185,7 @@
 		2FD874282A6630C80092306B /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
+				2FDE49F12A68899F000D53B2 /* Mocks */,
 				2FF3D93B2A6724F50038CC12 /* DownloadService.swift */,
 				2FD874252A662F7A0092306B /* GenericAPIService.swift */,
 				2FF3D9372A66F12B0038CC12 /* NetworkingEnums.swift */,
@@ -211,6 +211,15 @@
 				2FD858AC2A65C71500CB3E62 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		2FDE49F12A68899F000D53B2 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				2F8A8CEE2A67343F0093EAC9 /* DownloadServiceMock.swift */,
+				2F8A8CEB2A6731C20093EAC9 /* SearchServiceMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		2FF3D92B2A66DA1E0038CC12 /* Model */ = {
@@ -380,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FDE49F22A688D75000D53B2 /* CatsGalleryViewModel.swift in Sources */,
 				2F8A8CF72A6739DE0093EAC9 /* NetworkingEnums.swift in Sources */,
 				2F8A8D002A6740A60093EAC9 /* PostData.swift in Sources */,
 				2F8A8CFF2A673FF20093EAC9 /* DownloadService.swift in Sources */,

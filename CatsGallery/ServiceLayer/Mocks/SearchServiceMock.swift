@@ -14,8 +14,6 @@ class SearchServiceMock: SearchServiceProtocol {
         self.getPostsCompletion = completion
     }
     
-    // MARK: Simulated requests
-    
     func getPostsWithSuccess(_ response: APIResponse) {
         getPostsCompletion?(.success(response))
     }

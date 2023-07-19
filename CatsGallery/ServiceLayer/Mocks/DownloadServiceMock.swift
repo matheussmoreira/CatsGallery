@@ -12,11 +12,8 @@ class DownloadServiceMock: DownloadServiceProtocol {
     var getImageCompletion: ((Result<Data, NetworkError>) -> Void)?
     
     func getImage(link: String?, completion: @escaping (Result<Data, NetworkError>) -> Void) {
-        self.link = link
         getImageCompletion = completion
     }
-    
-    // MARK: Simulated requests
     
     func getImageWithSuccess(_ data: Data) {
         getImageCompletion?(.success(data))
