@@ -151,6 +151,7 @@
 		2FD858B92A65C71500CB3E62 /* CatsGalleryTests */ = {
 			isa = PBXGroup;
 			children = (
+				2FDE49F12A68899F000D53B2 /* Mocks */,
 				2FD858BA2A65C71500CB3E62 /* CatsGalleryViewModelTests.swift */,
 			);
 			path = CatsGalleryTests;
@@ -185,7 +186,6 @@
 		2FD874282A6630C80092306B /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
-				2FDE49F12A68899F000D53B2 /* Mocks */,
 				2FF3D93B2A6724F50038CC12 /* DownloadService.swift */,
 				2FD874252A662F7A0092306B /* GenericAPIService.swift */,
 				2FF3D9372A66F12B0038CC12 /* NetworkingEnums.swift */,
