@@ -21,6 +21,16 @@ class CatsGalleryViewController: UIViewController {
     var viewModel = CatsGalleryViewModel()
 //    var catsNumber = 32
     
+    private var label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Clique\nno botão\npara baixar\nas imagens"
+        label.textAlignment = .center
+        label.textColor = .gray
+        label.numberOfLines = 0
+        return label
+    }()
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -28,9 +38,17 @@ class CatsGalleryViewController: UIViewController {
         view.backgroundColor = .white
         setupNavigationBar()
         setupCollectionView()
+        setupLabel()
     }
     
-    // MARK: Private methods
+    // MARK: Methods
+    
+    private func setupLabel() {
+        view.addSubview(label)
+        label.widthAnchor.constraint(equalToConstant: 500).isActive = true
+        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
     
     private func setupNavigationBar() {
         navigationItem.title = "Gallery"
@@ -45,11 +63,15 @@ class CatsGalleryViewController: UIViewController {
     }
     
     private func erase() {
+        label.isHidden = true
         viewModel.erase()
         self.collectionView?.reloadData()
     }
     
+    // MARK: Networking methods
+    
     @objc private func didTapRefreshButton() {
+        
         let searchResult = viewModel.searchCatsPosts(execute: { erase() })
         
         searchResult.sink { completion in
