@@ -57,16 +57,16 @@ final class CatsGalleryViewModel {
     }
     
     func downloadCatsImages(onRange range: ClosedRange<Int>) -> [Future<Data, NetworkError>] {
-        let firstIndex = getSafeIndexFrom(index: range.first)
-        let lastIndex = getSafeIndexFrom(index: range.last)
+        let firstIndex = getSafeIndex(from: range.first)
+        let lastIndex = getSafeIndex(from: range.last)
         let safeRange = firstIndex...lastIndex
         
         return links[safeRange].map { link in
-            downloadImage(link: link)
+            downloadImage(from: link)
         }
     }
     
-    private func getSafeIndexFrom(index: Int?) -> Int {
+    private func getSafeIndex(from index: Int?) -> Int {
         var newIndex = index ?? 0
         if let index = index, index >= links.count {
             newIndex = links.count-1
@@ -74,12 +74,10 @@ final class CatsGalleryViewModel {
         return newIndex
     }
     
-    private func downloadImage(link: String?) -> Future<Data, NetworkError> {
+    private func downloadImage(from link: String?) -> Future<Data, NetworkError> {
         return Future { promise in
-//            self.queue.async {
-                if let link = link {
-                    print("Requesting image for \(link))")
-                }
+            self.queue.async {
+                print("Requesting image for \(String(describing: link)))")
                 self.downloadService.getImage(link: link) { result in
                     switch result {
                     case .success(let data):
@@ -89,7 +87,7 @@ final class CatsGalleryViewModel {
                         promise(.failure(error))
                     }
                 }
-//            }
+            }
         }
     }
     

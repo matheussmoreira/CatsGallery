@@ -45,7 +45,7 @@ class GenericAPIService {
         task.resume()
     }
     
-    func requestDataTask(for url: URL, completion: @escaping DataCompletion) -> URLSessionDataTask {
+    func requestDataTask(for url: URL, completion: @escaping DataCompletion) {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(.generic(error: error)))
@@ -58,13 +58,11 @@ class GenericAPIService {
             completion(.success(data))
         }
         task.resume()
-        return task
     }
     
-    func requestDataTaskPublisher(for url: URL) -> AnyPublisher<Data, URLError> {
-        print("Downloading image...")
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { return $0.data }
-            .eraseToAnyPublisher()
-    }
+//    func requestDataTaskPublisher(for url: URL) -> AnyPublisher<Data, URLError> {
+//        return URLSession.shared.dataTaskPublisher(for: url)
+//            .map { return $0.data }
+//            .eraseToAnyPublisher()
+//    }
 }

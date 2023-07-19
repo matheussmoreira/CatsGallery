@@ -136,8 +136,9 @@ extension CatsGalleryViewController {
         guard let collectionView = collectionView else { return }
         
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identifier)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "id")
         collectionView.dataSource = self
-        collectionView.prefetchDataSource = self
+//        collectionView.prefetchDataSource = self
         
         view.addSubview(collectionView)
         setupCollectionViewConstraints(collectionView)
@@ -168,7 +169,7 @@ extension CatsGalleryViewController {
 
 extension CatsGalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return min(viewModel.totalDisplay, viewModel.imagesData.count)
+        return viewModel.totalDisplay
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -176,7 +177,11 @@ extension CatsGalleryViewController: UICollectionViewDataSource {
             print("Could not instantiate ImageCell.")
             return UICollectionViewCell()
         }
-
+        
+        if indexPath.row >= viewModel.imagesData.count {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath)
+        }
+        
         let imageData = viewModel.imagesData[indexPath.row]
         let catImage = UIImage(data: imageData)
         let placeholder = UIImage(named: "placeholder")
@@ -187,41 +192,22 @@ extension CatsGalleryViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDataSourcePrefetching
+// Tentei usar mas não consegui implementar como gostaria
 
 extension CatsGalleryViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print("Prefetching!")
-//        let filtered = indexPaths.filter({ $0.row >= viewModel.totalDisplay - 4})
-        
+        print("Prefetching...")
         let paths = indexPaths.sorted(by: { $0.row < $1.row } )
+        let filter = paths.filter { $0.row >= viewModel.totalDisplay - 1 }
+        if filter.isEmpty { return }
+        
+        viewModel.totalDisplay += 4
 
-        if !paths.isEmpty {
-            viewModel.totalDisplay += 16
-            DispatchQueue.main.async {
-                collectionView.reloadData()
-            }
-        } else {
-            return
-        }
-
-        let firstIndex = paths.first!.row
-        let lastIndex = paths.last!.row
+        let firstIndex = filter.first!.row
+        let lastIndex = filter.last!.row
         downloadImages(onRange: firstIndex...lastIndex)
     }
 
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        /*
-         indexPaths.forEach({
-             guard let url = URL(string: "http://numbersapi.com/\($0)?json") else { return
-             }
-             guard let taskIndex = tasks.firstIndex(where: { $0.originalRequest?.url == url }) else {
-                 return
-             }
-             totalNumbers -= 1
-             self.tasks[taskIndex].cancel()
-             self.tasks.remove(at: taskIndex)
-         })
-     }
-         */
     }
 }
